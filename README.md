@@ -1,10 +1,13 @@
 # ROS
 An introduction to running ROS on a Raspberry Pi.
-## Setting up the Raspberry Pi
-Steps to install software:
+
+You can use these steps to take an "empty" Raspberry Pi and get it running ROS. The process has been tested on a Raspberry Pi 5 with 4Gbytes of memory.
+## Install Raspberry Pi OS
+You can use the latest Raspberry Pi OS. Just make sure to install the 64 bit version.
 ### Make an sd card for your Pi
+The first thing we are going to do is create a microSD card containing the operating system. A 32Gbyte card works OK.
 1. Start the Raspberry Imager program on your machine and put the microSD card into the drive on your computer. 
-1. Select the OS to be installed. Make sure you are not installing a desktop. You will be using your Raspberry Pi without a screen, keyboard or mouse. (I used Debian Bullseye Light)
+1. Select the OS to be installed. Make sure you install a 64 bit operating system. 
 1. Set the advanced options in the Imager program. Now make the folling settings. 
     1. Hostname (I called mine "bigpi")
     1. Enable SSH (password authentication)
@@ -12,7 +15,7 @@ Steps to install software:
     1. Set Wi-Fi credentials and locale
     1. Save the options so you can use them again if you need to
 1. Make the image.
-### Configure your Pi
+### Configure your Pi Operating System
 1. Remove the SD card from your computer, plug it into your Raspberry Pi and turn the Pi on. Wait a few minutes until the green led on the Pi seems to settle down a bit.
 1.	Now log in from your computer. You'll need a command prompt to do this. The commands given are from Microsoft PowerShell. You will be setting up a secure shell, so use the command ssh:
     ```
@@ -53,6 +56,8 @@ Steps to install software:
         ssh bigpi.local -l rob
         ```
     1. This should open a remote terminal session with no password required. If this works you will be able to use remote development with Visual Studio Code.
+## Install software
+Now that we have the Raspberry Pi running we need to install some software to make it useful. You might find that some of these tools are already installed - depending on which operating system you installed. You can do all this installation from the remote terminal session you opened using ssh in the previous step.
 ### Install git
 1. Now we need to install git on your machine:
     ```
@@ -68,7 +73,7 @@ A lot of what we are going to do will require the Visual Studio Code editor. Let
 ```
 sudo apt-get install code
 ```
-This will take a little while. Note that you can't run code from the command line, you'll need to be using a windowed environment. You can plug your monitor, keyboard and mouse into your Pi and do this directly, but you might find it more convenient to use remote desktop and link to your Pi over the network. 
+This will take a little while. Note that you can't run code from the command line, you'll need to be using a windowed environment. You can plug your monitor, keyboard and mouse into your Pi and do this directly, but you might find it more convenient to use remote desktop and link to your Pi over the network. So let's set that up.
 ### Enable remote desktop
 Remote desktop makes it very easy to work with your Pi. You'll need to download and install VNC Viewer onto your computer, but it means that you can get full graphical control over your computer remotely. The Pi display appears in a window on your desktop and you can use your mouse and keyboard to interact with your Pi.
 1.  Start raspi-config:
@@ -94,7 +99,6 @@ Remote desktop makes it very easy to work with your Pi. You'll need to download 
 1.  Get the VNC Viewer program for your device. You can download it from [here](https://www.realvnc.com/en/connect/download/viewer/) 
 
 1.   When you run the VNC Viewer you just need to enter the address of your Pi into the top of the program and press enter. The address of the pi will be "yourPiName".local. I called my pi bigpi, so the address I use is "bigpi.local". 
-
 ### Install Docker
 We are going to run ROS inside Docker. This makes the configuration a lot easier.
 1.  First we get the docker install script:
@@ -142,10 +146,29 @@ We are going to run ROS inside Docker. This makes the configuration a lot easier
     docker ps -a
     ```
     This will show the process that you were running. 
-## Get a ROS Docker Image
+### Build a Docker image for ROS
+Now that you have Git running on your machine you can copy this repository onto it so that you can use the resources in the file to set up ROS. 
 
-1.  Now we can ask Docker to load an image containing the version of the Robot Operating System (ROS) that we are going to use.
-    ```
-     docker image pull ros:iron
-    ```
-    This will pull down all the components required to run ros on your machine. It might take a while, but you only have to do it once on a machine. The great thing about this is that all the settings are pre-configured in the image so it will just work. 
+```
+git clone https://github.com/CrazyRobMiles/ROS-Intro
+```
+This will create a folder called ROS-Intro containing this README file and a Dockerfile. Change your working directory to this folder:
+```
+cd ROS-Intro
+```
+We are now going to build a Docker image that contains ROS and all the graphical tools that it uses. Perform the following command
+```
+docker build -t ros2-foxy-gazebo:arm64 .
+```
+This will generate a Docker image called ros2-foxy-gazebo:arm64. It will take a while to do this, so grab a cup of coffee. Note that you only have to do this at the start. Once the image has been built you will be able to just run it. 
+When the image has been built you can run it with the following command:
+
+```
+docker run -it \
+  --env="DISPLAY" \
+  --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+  ros2-foxy-gazebo:arm64
+```
+This will start ROS running and you will find that your command prompt changes. Now we can issue ROS commands. Let's start by creating a simple project.
+
+
