@@ -1,4 +1,0 @@
-docker run -it \
-  --env="DISPLAY" \
-  --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-  ros2-foxy-gazebo:arm64

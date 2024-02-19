@@ -1,0 +1,4 @@
+[console_scripts]
+buttons = console.button_member_function:main
+console = console.panel_member_function:main
+

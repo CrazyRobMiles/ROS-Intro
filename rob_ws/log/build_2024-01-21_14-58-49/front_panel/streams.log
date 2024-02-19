@@ -1,0 +1,34 @@
+[0.872s] Invoking command in '/home/rob/rob_ws/src/front_panel': PYTHONPATH=/home/rob/rob_ws/build/front_panel/prefix_override:/home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/front_panel build --build-base /home/rob/rob_ws/build/front_panel/build install --record /home/rob/rob_ws/build/front_panel/install.log --single-version-externally-managed
+[1.113s] running egg_info
+[1.113s] creating ../../build/front_panel/console.egg-info
+[1.114s] writing ../../build/front_panel/console.egg-info/PKG-INFO
+[1.114s] writing dependency_links to ../../build/front_panel/console.egg-info/dependency_links.txt
+[1.114s] writing entry points to ../../build/front_panel/console.egg-info/entry_points.txt
+[1.114s] writing requirements to ../../build/front_panel/console.egg-info/requires.txt
+[1.114s] writing top-level names to ../../build/front_panel/console.egg-info/top_level.txt
+[1.115s] writing manifest file '../../build/front_panel/console.egg-info/SOURCES.txt'
+[1.116s] reading manifest file '../../build/front_panel/console.egg-info/SOURCES.txt'
+[1.116s] adding license file 'LICENSE'
+[1.117s] writing manifest file '../../build/front_panel/console.egg-info/SOURCES.txt'
+[1.117s] running build
+[1.117s] running build_py
+[1.118s] creating /home/rob/rob_ws/build/front_panel/build
+[1.118s] creating /home/rob/rob_ws/build/front_panel/build/lib
+[1.118s] creating /home/rob/rob_ws/build/front_panel/build/lib/console
+[1.118s] copying console/button_member_function.py -> /home/rob/rob_ws/build/front_panel/build/lib/console
+[1.118s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[1.119s]   warnings.warn(
+[1.119s] copying console/panel_member_function.py -> /home/rob/rob_ws/build/front_panel/build/lib/console
+[1.119s] copying console/__init__.py -> /home/rob/rob_ws/build/front_panel/build/lib/console
+[1.119s] running install
+[1.119s] running install_lib
+[1.119s] creating /home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages/console
+[1.120s] copying /home/rob/rob_ws/build/front_panel/build/lib/console/button_member_function.py -> /home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages/console
+[1.120s] copying /home/rob/rob_ws/build/front_panel/build/lib/console/panel_member_function.py -> /home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages/console
+[1.120s] copying /home/rob/rob_ws/build/front_panel/build/lib/console/__init__.py -> /home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages/console
+[1.120s] byte-compiling /home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages/console/button_member_function.py to button_member_function.cpython-310.pyc
+[1.121s] byte-compiling /home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages/console/panel_member_function.py to panel_member_function.cpython-310.pyc
+[1.121s] byte-compiling /home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages/console/__init__.py to __init__.cpython-310.pyc
+[1.121s] running install_data
+[1.122s] error: can't copy 'resource/console': doesn't exist or not a regular file
+[1.141s] Invoked command in '/home/rob/rob_ws/src/front_panel' returned '1': PYTHONPATH=/home/rob/rob_ws/build/front_panel/prefix_override:/home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/front_panel build --build-base /home/rob/rob_ws/build/front_panel/build install --record /home/rob/rob_ws/build/front_panel/install.log --single-version-externally-managed

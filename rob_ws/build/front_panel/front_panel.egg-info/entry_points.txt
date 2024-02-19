@@ -1,0 +1,4 @@
+[console_scripts]
+buttons = front_panel.buttons_member_function:main
+display = front_panel.display_member_function:main
+

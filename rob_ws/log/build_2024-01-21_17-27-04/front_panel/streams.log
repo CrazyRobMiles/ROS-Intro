@@ -1,0 +1,28 @@
+[0.797s] Invoking command in '/home/rob/rob_ws/src/front_panel': PYTHONPATH=/home/rob/rob_ws/build/front_panel/prefix_override:/home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/front_panel build --build-base /home/rob/rob_ws/build/front_panel/build install --record /home/rob/rob_ws/build/front_panel/install.log --single-version-externally-managed
+[1.036s] running egg_info
+[1.037s] writing ../../build/front_panel/front_panel.egg-info/PKG-INFO
+[1.037s] writing dependency_links to ../../build/front_panel/front_panel.egg-info/dependency_links.txt
+[1.038s] writing entry points to ../../build/front_panel/front_panel.egg-info/entry_points.txt
+[1.038s] writing requirements to ../../build/front_panel/front_panel.egg-info/requires.txt
+[1.038s] writing top-level names to ../../build/front_panel/front_panel.egg-info/top_level.txt
+[1.041s] reading manifest file '../../build/front_panel/front_panel.egg-info/SOURCES.txt'
+[1.041s] adding license file 'LICENSE'
+[1.043s] writing manifest file '../../build/front_panel/front_panel.egg-info/SOURCES.txt'
+[1.043s] running build
+[1.043s] running build_py
+[1.044s] copying front_panel/button_member_function.py -> /home/rob/rob_ws/build/front_panel/build/lib/front_panel
+[1.044s] running install
+[1.045s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[1.045s]   warnings.warn(
+[1.045s] running install_lib
+[1.046s] copying /home/rob/rob_ws/build/front_panel/build/lib/front_panel/button_member_function.py -> /home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages/front_panel
+[1.048s] byte-compiling /home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages/front_panel/button_member_function.py to button_member_function.cpython-310.pyc
+[1.049s] running install_data
+[1.050s] running install_egg_info
+[1.053s] removing '/home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages/front_panel-0.0.0-py3.10.egg-info' (and everything under it)
+[1.053s] Copying ../../build/front_panel/front_panel.egg-info to /home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages/front_panel-0.0.0-py3.10.egg-info
+[1.054s] running install_scripts
+[1.076s] Installing buttons script to /home/rob/rob_ws/install/front_panel/lib/front_panel
+[1.076s] Installing console script to /home/rob/rob_ws/install/front_panel/lib/front_panel
+[1.076s] writing list of installed files to '/home/rob/rob_ws/build/front_panel/install.log'
+[1.098s] Invoked command in '/home/rob/rob_ws/src/front_panel' returned '0': PYTHONPATH=/home/rob/rob_ws/build/front_panel/prefix_override:/home/rob/rob_ws/install/front_panel/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/front_panel build --build-base /home/rob/rob_ws/build/front_panel/build install --record /home/rob/rob_ws/build/front_panel/install.log --single-version-externally-managed

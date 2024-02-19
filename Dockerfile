@@ -3,11 +3,18 @@ FROM ubuntu:20.04
 # Avoid user interaction with tzdata
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Replace 'your_username' with your actual username
+# Optionally, set the UID and GID to match your host user's UID and GID
+ARG USERNAME=your_username
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
 # Update and install necessary packages
 RUN apt-get update && apt-get install -y \
     curl \
     gnupg2 \
     lsb-release \
+    sudo \
     && rm -rf /var/lib/apt/lists/*
 
 # Add the ROS 2 and Gazebo repositories
@@ -16,22 +23,31 @@ RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt
     && curl -s http://packages.osrfoundation.org/gazebo.key | apt-key add - \
     && sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
 
-# Install ROS 2 Desktop and Gazebo
+# Install ROS 2 Desktop, Gazebo, and GUI tools
 RUN apt-get update && apt-get install -y \
     ros-foxy-desktop \
     gazebo11 \
     ros-foxy-gazebo-ros-pkgs \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install tools to enable GUI applications (e.g., RViz, rqt) to run
-RUN apt-get update && apt-get install -y \
     x11-apps \
     && rm -rf /var/lib/apt/lists/*
 
-# Setup environment to enable GUI applications to display on the host
+# Create a user with the same user ID as the host user
+# and add user to 'sudo' group
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID --create-home --shell /bin/bash $USERNAME \
+    && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
+# Set the environment variable for the display
 ENV DISPLAY=host.docker.internal:0
 
-# Source the ROS 2 setup file
+# Switch to the user
+USER $USERNAME
+
+# Set the working directory to the user's home directory
+WORKDIR /home/$USERNAME
+
+# Source the ROS 2 setup file in the user's bashrc
 RUN echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc
 
 # Setup entrypoint

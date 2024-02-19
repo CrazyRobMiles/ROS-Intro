@@ -1,0 +1,10 @@
+docker run -it \
+  --env="DISPLAY" \
+  --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+  --volume="/home/$USER:/home/$USER" \
+  --network=host \
+  --ipc=host \
+  --device /dev/gpiomem0:/dev/gpiomem0 \
+  --device /dev/mem \
+  --user="$(id -u):$(id -g)" \
+  ros2-foxy-gazebo:arm64

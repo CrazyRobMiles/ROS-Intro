@@ -167,6 +167,12 @@ When the image has been built you can run it with the following command:
 docker run -it \
   --env="DISPLAY" \
   --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+  --volume="/home/$USER:/home/$USER" \
+  --network=host \
+  --ipc=host \
+  --device /dev/gpiomem0:/dev/gpiomem0 \
+  --device /dev/mem \
+  --user="$(id -u):$(id -g)" \
   ros2-foxy-gazebo:arm64
 ```
 This will start ROS running and you will find that your command prompt changes. Now we can issue ROS commands. Let's start by creating a simple project.

@@ -1,0 +1,2 @@
+docker build --build-arg USERNAME=your_username --build-arg USER_UID=$(id -u) --build-arg USER_GID=$(id -g) -t ros2-foxy-gazebo:arm64 .
+
