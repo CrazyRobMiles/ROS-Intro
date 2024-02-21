@@ -213,7 +213,7 @@ The start command has the -i option which means "connect this terminal to the co
 
 Let's start by working with the project created in the magazine article. This implements a simulation of a robot control panel with buttons and lights. The button process publishes messages when buttons are pressed. The display process prints these messages.
 
-Before you start make sure that you have installed Docker and built the ROS image. Now 
+Before you start make sure that you have installed Docker and built the ROS image. 
 
 You can find these processes in the 
 
