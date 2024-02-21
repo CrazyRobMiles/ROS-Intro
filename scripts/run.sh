@@ -5,7 +5,6 @@ docker run -it \
   --network=host \
   --ipc=host \
   --name=panel_demo \
-  --device /dev/gpiomem0:/dev/gpiomem0 \
-  --device /dev/mem \
+  --priviledged \
   --user="$(id -u):$(id -g)" \
   ros2-foxy-gazebo:arm64
