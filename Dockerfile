@@ -15,7 +15,12 @@ RUN apt-get update && apt-get install -y \
     gnupg2 \
     lsb-release \
     sudo \
+    python3-pip \
+    python3-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Raspberry Pi GPIO libraries
+RUN pip3 install RPi.GPIO gpiozero
 
 # Add the ROS 2 and Gazebo repositories
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - \
