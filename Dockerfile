@@ -29,6 +29,9 @@ RUN apt-get update && apt-get install -y \
     gazebo11 \
     ros-foxy-gazebo-ros-pkgs \
     x11-apps \
+    python3-colcon-common-extensions \
+    build-essential \
+    cmake \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a user with the same user ID as the host user
