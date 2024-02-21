@@ -5,6 +5,6 @@ docker run -it \
   --network=host \
   --ipc=host \
   --name=panel_demo \
-  --priviledged \
+  --privileged \
   --user="$(id -u):$(id -g)" \
   ros2-foxy-gazebo:arm64
