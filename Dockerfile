@@ -31,6 +31,8 @@ RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt
 # Install ROS 2 Desktop, Gazebo, and GUI tools
 RUN apt-get update && apt-get install -y \
     ros-foxy-desktop \
+    ros-foxy-xacro \
+    ros-foxy-joint-state-publisher-gui \
     gazebo11 \
     ros-foxy-gazebo-ros-pkgs \
     x11-apps \

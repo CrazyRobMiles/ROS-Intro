@@ -2,6 +2,7 @@ docker run -it \
   --env="DISPLAY" \
   --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
   --volume="/home/$USER/ROS-Intro:/home/$USER/ROS-Intro" \
+  --volume="/home/$USER/dev_ws:/home/$USER/dev_ws" \
   --network=host \
   --ipc=host \
   --name=panel_demo \
