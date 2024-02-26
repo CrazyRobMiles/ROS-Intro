@@ -39,6 +39,7 @@ GPIO.setwarnings(True)
 GPIO.setmode(GPIO.BOARD)
 
 def setMotor(index, speed):
+    speed_limit = 20
     if index < 1 or index > 4:
         raise AttributeError("Invalid motor num: %d"%index)
     if index == 2 or index == 4:
@@ -46,8 +47,8 @@ def setMotor(index, speed):
     else:
         speed = -speed
     index = index - 1
-    speed = 100 if speed > 100 else speed
-    speed = -100 if speed < -100 else speed
+    speed = speed_limit if speed > speed_limit else speed
+    speed = -speed_limit if speed < -speed_limit else speed
     reg = __MOTOR_ADDR + index
     
     with SMBus(__i2c) as bus:

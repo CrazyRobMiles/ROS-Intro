@@ -1,4 +1,4 @@
-Metadata-Version: 2.1
+Metadata-Version: 1.2
 Name: front-panel
 Version: 0.0.0
 Summary: Provides a front panel containing buttons and a text display
@@ -6,8 +6,5 @@ Home-page: UNKNOWN
 Maintainer: rob
 Maintainer-email: rob@hullpixelbot.com
 License: Apache-2.0
+Description: UNKNOWN
 Platform: UNKNOWN
-License-File: LICENSE
-
-UNKNOWN
-

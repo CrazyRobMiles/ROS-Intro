@@ -272,4 +272,9 @@ You might get errors when you try to run a program such as rviz2 in the ROS dock
 ```
 xhost +local:
 ```
-
+### Why do I get an error when I try to drive the motors?
+You might get an error when you try to move the motors becuase the ROS program controlling the motors will try to access the i2c device which is usually restricted. You can solve this with the command:
+```
+sudo chmod 666 /dev/i2c-1
+```
+This makes the i2c-1 device accessible by all. You will have to issue this command after your have opened your docker image.
