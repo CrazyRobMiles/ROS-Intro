@@ -39,7 +39,7 @@ GPIO.setwarnings(True)
 GPIO.setmode(GPIO.BOARD)
 
 def setMotor(index, speed):
-    speed_limit = 20
+    speed_limit = 30
     if index < 1 or index > 4:
         raise AttributeError("Invalid motor num: %d"%index)
     if index == 2 or index == 4:
@@ -64,7 +64,33 @@ def setMotor(index, speed):
            
     return __motor_speed[index]
 
-     
+def calculate_motor_speeds(twist):
+    # Robot dimensions in meters
+    L = 0.116  # Half the distance between front and back wheels
+    W = 0.130  # Half the distance between left and right wheels
+    
+    # Convert twist velocities to motor speeds
+    Vx = twist.linear.x
+    Vy = twist.linear.y
+    Vz = twist.angular.z
+    
+    # Calculations based on the meccanum wheel formulae
+    V_FL = Vx - Vy - (L + W) * Vz
+    V_FR = Vx + Vy + (L + W) * Vz
+    V_RL = Vx + Vy - (L + W) * Vz
+    V_RR = Vx - Vy + (L + W) * Vz
+    
+    # Normalize the speeds to fit within -100 to 100 range
+    # This requires knowing the max possible value of V_FL, V_FR, V_RL, V_RR based on robot specs
+    # For simplicity, let's assume a direct scaling for this example
+    max_wheel_speed = max(abs(V_FL), abs(V_FR), abs(V_RL), abs(V_RR), 1) # Avoid division by zero
+    scale = 100.0 / max_wheel_speed
+
+    setMotor(1,int(V_FL * scale))
+    setMotor(2,int(V_FR * scale))
+    setMotor(3,int(V_RL * scale))
+    setMotor(4,int(V_RR * scale))
+
 def getMotor(index):
     if index < 1 or index > 4:
         raise AttributeError("Invalid motor num: %d"%index)
@@ -180,10 +206,13 @@ class MecanumDriveSubscriber(Node):
         self.get_logger().info("Motor subscriber running")
 
     def listener_callback(self, msg):
-        # Process the incoming velocity commands
         linear_x = msg.linear.x  # Forward/Backward
         linear_y = msg.linear.y  # Left/Right
         angular_z = msg.angular.z  # Rotation
+        # Process the incoming velocity commands
+        self.get_logger().info(f'Received command: linear_x={linear_x}, linear_y={linear_y}, angular_z={angular_z}')
+        calculate_motor_speeds(msg)
+        return
 
         # Here, you'd add your code to translate these velocities into motor commands
         # For example, calculating wheel speeds for the meccanum drive
