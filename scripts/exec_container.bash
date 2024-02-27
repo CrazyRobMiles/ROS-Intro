@@ -1,1 +1,1 @@
-docker exec -it panel_demo /bin/bash
+docker exec -it ros_demo /bin/bash

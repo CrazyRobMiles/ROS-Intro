@@ -3,9 +3,9 @@ FROM ubuntu:20.04
 # Avoid user interaction with tzdata
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Replace 'your_username' with your actual username
+# Replace 'rob' with your actual username (unless you are called rob)
 # Optionally, set the UID and GID to match your host user's UID and GID
-ARG USERNAME=your_username
+ARG USERNAME=rob
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Raspberry Pi GPIO libraries
+# Install Raspberry Pi GPIO libraries for Python3
 RUN pip3 install RPi.GPIO gpiozero smbus2 rpi_ws281x
 
 # Add the ROS 2 and Gazebo repositories
@@ -59,6 +59,12 @@ WORKDIR /home/$USERNAME
 
 # Source the ROS 2 setup file in the user's bashrc
 RUN echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc
+
+# Enable graphical applications
+RUN xhost +local:
+
+# Allow general access to the i2c hardware
+RUN sudo chmod 666 /dev/i2c-1
 
 # Setup entrypoint
 ENTRYPOINT ["/bin/bash"]

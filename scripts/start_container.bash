@@ -1,1 +1,1 @@
-docker container start -i panel_demo
+docker container start -i ros_demo

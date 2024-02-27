@@ -180,41 +180,20 @@ xhost +local:
 ```
 This allows the container to connect to the X server on your Pi. You need to do this once, at the start of your ROS session - although you will have to do it again next time you start your Pi. You don't need to use the graphical interface if you just want to use ROS to control your robot. In that case you could look for a Docker image which just contains ROS without the graphical elements. 
 
-### The Docker run command
-Now we need to start ROS running. Cut out the run command below and paste it into the terminal to create a docker container running the ROS image we have just created:
-
+### ROS Hardware
+If you want your ROS application to be able to interact with hardware on your Pi you will need to give it access to the relevant devices. The motor example for the HiWonder robot used in the article needs to have access to i2c, so you need to run the command below to enable this. 
 ```
-docker run -it \
-  --env="DISPLAY" \
-  --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-  --volume="/home/$USER/ROS-Intro:/home/$USER/ROS-Intro" \
-  --network=host \
-  --ipc=host \
-  --name=panel_demo \
-  --device /dev/gpiomem0:/dev/gpiomem0 \
-  --device /dev/mem \
-  --user="$(id -u):$(id -g)" \
-  ros2-foxy-gazebo:arm64
- ```
-This will start the image, create a Docker container called **panel_demo** and make it ready for use. Precisly what it does is beyond the scope of this tutorial. You will find that your command prompt now looks different. You have entered another world - that of your ROS Docker container. We can issue ROS commands in this world. 
-
-Note that only commands that have been installed in the image will work in ROS. Note also that the ROS-Intro folder (the one we downloaded from GitHub) is mounted in the ROS environment. We will use this to access the ROS application that was created for this exercise.
-
-The run command starts an interactive terminal session in the Docker container. When this session ends (either by pressing CTRL+C or by using the exit command) the container will stop running, but its contents will be stored. You can use the Docker start command to restart the container. The container that is created has the name panel_demo (you can see it in the command above). If you want to create multiple containers you can do this by just changing the name. In fact, using Docker you could even have multiple ROS environments running at the same time on your machine - but this would be very confusing because they are all sharing the network connection of one machine. 
-
-### The Docker start command
-The Docker start command starts running an existing container:
+sudo chmod 666 /dev/i2c-1
 ```
-docker start -i panel_demo
-```
-The start command has the -i option which means "connect this terminal to the container". The final parameter is the name of the container to be started. The above command would only work if a panel_demo container had been previusly created by a docker run command. 
+## 
 
-## ROS Experiments
-
-Let's start by working with the project created in the magazine article. This implements a simulation of a robot control panel with buttons and lights. The button process publishes messages when buttons are pressed. The display process prints these messages.
+Let's start by working with the project created in the magazine article. This implements a simulation of a robot control panel with buttons and lights along with a simple motor controller. 
 
 Before you start make sure that you have installed Docker and built the ROS image. 
 
+### Start ROS
+
+This repository contains a folder called ROS-
 You can find these processes in the 
 
 ## FAQ
@@ -223,11 +202,18 @@ This might be because there is already an image with that name on your machine. 
 ```
 docker start -i panel_demo
 ```
+### 
 You can use this command in multiple terminal sessions to create multiple connections to docker.
 ### How do I stop my Docker container?
-When the last terminal connected to container exits the container stops. You can then use the start command to restart it. There is also a stop command 
+When the last terminal connected to container exits the container stops. You can then use the start command to restart it. There is also a stop command. The command to exit a container is, not surprisingly, exit? Note that when you exit a container it is "frozen in time" and you can resume that container by starting it.
+### Why are some commands missing from my container?
+The Docker image that runs in a container starts with a very "bare bones" version of Linux and then adds to it. This means that not all commands are available. You can install them inside the image, but you need to remember that these will vanish when the container is deleted. 
 ### What happens to files I create in my container?
-The run command you can see above maps the ROS-Intro folder into the Docker container. Changes that you make to the contents of this folder in the container will be reflected in the ROS-Intro folder on your machine. Any other files you create in the container will persist in that container. If you remove the container (perhaps by pruning it) you will lost all those changes. 
+The run command you can see above maps the rob_ws folder into the Docker container. This is the folder that contains the sample application. Changes that you make to the contents of this folder in the container will be reflected in the rob_ws folder on your machine. 
+
+Any other files you create in the container will persist in that container. If you remove the container (perhaps by pruning it) you will lost all those changes. 
+### What is the difference between run, start and exec in Docker?
+The run command takes an image and runs a new container. If you have specified a name for the container, Docker will check to see if there is already a container with that name. If there is 
 ### Can I run Visual Studio Code in the container?
 You would have to install Visual Studio Code in the container to be able to use it there. However, there is no need. You can use Visual Studio Code in your Pi to work on files in the ROS-Intro folder and these changes will refect into the container.
 ### Why won't graphical ROS applications work in the container?
@@ -259,10 +245,8 @@ source install/setup.bash
 ```
 The setup.bash file is created automatically when the package is built. If you don't run it to configure your shell you will find that none of the nodes will be picked up.
 ### Why have I run out of file space?
-Docker creates a cache of files it uses when it builds a new image. This is nice
-if it saves reloading them next time you build the image but nasy if it means
-that you run out of file space.
-```
+Docker creates a cache of files it uses when it builds a new image. This is nice if it saves reloading them next time you build the image but nasty if it means that you run out of file space.
+``` 
 docker system prune -f
 ```
 The command above will ask docker to remove all cached files. 
@@ -278,3 +262,5 @@ You might get an error when you try to move the motors becuase the ROS program c
 sudo chmod 666 /dev/i2c-1
 ```
 This makes the i2c-1 device accessible by all. You will have to issue this command after your have opened your docker image.
+### Why won't my Docker image work on my computer?
+Docker is great at hiding the particular version of operating system that you are using on your machine. But even docker can't deal with the differences between different type of processor chips. For example, you can't run the ROS image above on a PC compatible device. However, you should be able to customise the docker file to build a version of ROS for you which would run on most any PC. 
