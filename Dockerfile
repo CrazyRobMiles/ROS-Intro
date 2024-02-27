@@ -60,11 +60,5 @@ WORKDIR /home/$USERNAME
 # Source the ROS 2 setup file in the user's bashrc
 RUN echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc
 
-# Enable graphical applications
-RUN xhost +local:
-
-# Allow general access to the i2c hardware
-RUN sudo chmod 666 /dev/i2c-1
-
 # Setup entrypoint
 ENTRYPOINT ["/bin/bash"]
