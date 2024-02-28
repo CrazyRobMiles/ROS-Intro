@@ -66,8 +66,8 @@ def setMotor(index, speed):
 
 def calculate_motor_speeds(twist):
     # Robot dimensions in meters
-    L = 0.116  # Half the distance between front and back wheels
-    W = 0.130  # Half the distance between left and right wheels
+    L = 0.059  # Half the distance between front and back wheels
+    W = 0.067  # Half the distance between left and right wheels
     
     # Convert twist velocities to motor speeds
     Vx = twist.linear.x
@@ -199,7 +199,6 @@ class MecanumDriveSubscriber(Node):
             self.listener_callback,
             10)
         self.subscription  # prevent unused variable warning
-        self.chassis = MecanumChassis()
         setMotor(1,60)
         time.sleep(0.5)
         setMotor(1,0)
@@ -214,11 +213,6 @@ class MecanumDriveSubscriber(Node):
         calculate_motor_speeds(msg)
         return
 
-        # Here, you'd add your code to translate these velocities into motor commands
-        # For example, calculating wheel speeds for the meccanum drive
-        self.get_logger().info(f'Received command: linear_x={linear_x}, linear_y={linear_y}, angular_z={angular_z}')
-        # Extract the desired velocities
-        self.chassis.twist_control(linear_x,linear_y,angular_z)
 
 def main(args=None):
     rclpy.init(args=args)
