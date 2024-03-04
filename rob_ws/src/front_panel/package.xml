@@ -4,7 +4,7 @@
   <name>front_panel</name>
   <version>0.0.0</version>
   <description>Provides a front panel containing buttons and a text display</description>
-  <maintainer email="rob@hullpixelbot.com">rob</maintainer>
+  <maintainer email="rob@robmiles.com">rob</maintainer>
   <license>Apache-2.0</license>
 
   <exec_depend>rclpy</exec_depend>

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>motors</name>
+  <name>drive</name>
   <version>0.0.0</version>
-  <description>Provides keyboard control and a motor controller</description>
-  <maintainer email="rob@hullpixelbot.com">rob</maintainer>
+  <description>Provides keyboard control, motor controller and movement sensor</description>
+  <maintainer email="rob@robmiles.com">rob</maintainer>
   <license>Apache-2.0</license>
 
   <exec_depend>rclpy</exec_depend>

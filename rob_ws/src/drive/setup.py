@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'motors'
+package_name = 'drive'
 
 setup(
     name=package_name,
@@ -14,14 +14,15 @@ setup(
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='rob',
-    maintainer_email='rob@hullpixelbot.com',
-    description='Provides a motor controller and a keyboard tester',
+    maintainer_email='rob@robmiles.com',
+    description='Provides a motor controller, motion sensor and a keyboard tester',
     license='Apache-2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'keyboard = motors.keyboard_member_function:main',
-            'motors = motors.motors_member_function:main'
+            'keyboard = drive.keyboard_member_function:main',
+            'motors = drive.motors_member_function:main',
+            'motion = drive.motion_sensor_member_function:main'
         ],
     },
 )

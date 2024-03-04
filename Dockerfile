@@ -15,12 +15,13 @@ RUN apt-get update && apt-get install -y \
     gnupg2 \
     lsb-release \
     sudo \
+    usbutils \
     python3-pip \
     python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Raspberry Pi GPIO libraries for Python3
-RUN pip3 install RPi.GPIO gpiozero smbus2 rpi_ws281x
+RUN pip3 install RPi.GPIO gpiozero smbus2 rpi_ws281x 
 
 # Add the ROS 2 and Gazebo repositories
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - \
@@ -46,7 +47,8 @@ RUN apt-get update && apt-get install -y \
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID --create-home --shell /bin/bash $USERNAME \
     && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME
+    && chmod 0440 /etc/sudoers.d/$USERNAME \
+    && sudo usermod -a -G dialout $USERNAME
 
 # Set the environment variable for the display
 ENV DISPLAY=host.docker.internal:0
