@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="robot">
+
+  <!-- Base Link -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.5 0.5 0.1"/> <!-- Change the size as needed -->
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Mecanum Wheel Links -->
+  <link name="front_left_wheel_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.1" radius="0.1"/> <!-- Adjust the dimensions as needed -->
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+  <!-- Repeat for front_right_wheel_link, rear_left_wheel_link, and rear_right_wheel_link with similar structure -->
+
+  <!-- Joints -->
+  <!-- Front Left Wheel Joint -->
+  <joint name="front_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_left_wheel_link"/>
+    <origin xyz="0.25 0.25 0" rpy="0 0 0"/> <!-- Adjust position as needed -->
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <!-- Repeat for other three wheels with appropriate names and positions -->
+
+</robot>
