@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Raspberry Pi GPIO libraries for Python3
-RUN pip3 install RPi.GPIO gpiozero smbus2 rpi_ws281x 
+RUN pip3 install RPi.GPIO gpiozero smbus2 rpi_ws281x pyserial
 
 # Add the ROS 2 and Gazebo repositories
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - \
