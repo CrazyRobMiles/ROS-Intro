@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     gnupg2 \
     lsb-release \
+    nano \
     sudo \
     usbutils \
     python3-pip \
@@ -44,11 +45,14 @@ RUN apt-get update && apt-get install -y \
 
 # Create a user with the same user ID as the host user
 # and add user to 'sudo' group
+# Create a group with the specified GID and a user with the specified UID and GID.
+# Then, set up passwordless sudo access for the user.
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID --create-home --shell /bin/bash $USERNAME \
     && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME \
-    && sudo usermod -a -G dialout $USERNAME
+    # Adding the user to the dialout group
+    && usermod -a -G dialout $USERNAME
 
 # Set the environment variable for the display
 ENV DISPLAY=host.docker.internal:0

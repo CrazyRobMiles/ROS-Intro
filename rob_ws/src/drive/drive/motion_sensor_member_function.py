@@ -20,6 +20,7 @@ import select
 import termios
 import tty
 import serial
+import json
 
 class MotionSensor(Node):
 
@@ -29,6 +30,7 @@ class MotionSensor(Node):
             try:
                 self.get_logger().info("Motion sensor Node string: connecting to " + portName)
                 result = serial.Serial(portName, 115200)
+                return result
             except :
                 self.get_logger().info("    Connect failed to " + portName)
         return result
@@ -37,15 +39,15 @@ class MotionSensor(Node):
         super().__init__('motion_sensor')
         ports = ["/dev/ttyACM0","/dev/ttyACM1","/dev/ttyACM2"]
 
+        self.serial_port = self.get_port(ports)
 
-        self.port = self.get_port(ports)
-
-        if self.port==None:
+        if self.serial_port==None:
             self.get_logger().info("Failed to open serial port ")
             raise Exception("Port not found")
 
 
         self.publisher_ = self.create_publisher(Twist, 'cmd_vel', 10)
+        self.timer = self.create_timer(0.1, self.timer_callback)  # Poll at 10 Hz
 
         self.get_logger().info("Motion sensor Node Running")
 
@@ -53,24 +55,23 @@ class MotionSensor(Node):
         self.settings = termios.tcgetattr(sys.stdin)
 
     def timer_callback(self):
-        key = self.get_key()
+        if self.serial_port.in_waiting:
+            data_str = self.serial_port.readline().decode('utf-8').strip()
+            try:
+                data_json = json.loads(data_str)
+                x = float(data_json.get('x', 0))  # Convert to float
+                y = float(data_json.get('y', 0))  # Convert to float
 
-    def get_key(self):
-        tty.setraw(sys.stdin.fileno())
-        r, _, _ = select.select([sys.stdin], [], [], 0.1)
-        if r:
-            key = sys.stdin.read(1)
-        else:
-            key = ''
-        # Restore terminal settings
-        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.settings)
-        return key
-
-    def publish_twist(self, linear, angular):
-        msg = Twist()
-        msg.linear.x = linear
-        msg.angular.z = angular
-        self.publisher_.publish(msg)
+                twist = Twist()
+                twist.linear.x = x
+                twist.linear.y = y
+                # Assuming z, angular x, y, and z are 0 or set them as needed
+                self.publisher_.publish(twist)
+                self.get_logger().info(f'Publishing: {twist}')
+            except json.JSONDecodeError:
+                self.get_logger().error('Could not decode JSON from serial data')
+            except ValueError as e:
+                self.get_logger().error(f'Error converting x or y to float: {e}')
 
 def main(args=None):
     rclpy.init(args=args)
