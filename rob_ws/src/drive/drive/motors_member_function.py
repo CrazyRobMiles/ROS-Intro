@@ -198,7 +198,6 @@ class MecanumDriveSubscriber(Node):
             'cmd_vel',  # Topic name
             self.listener_callback,
             10)
-        self.subscription  # prevent unused variable warning
         setMotor(1,60)
         time.sleep(0.5)
         setMotor(1,0)

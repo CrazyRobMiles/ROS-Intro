@@ -24,7 +24,7 @@ class KeyboardTeleop(Node):
 
     def __init__(self):
         super().__init__('keyboard_teleop')
-        self.publisher_ = self.create_publisher(Twist, 'cmd_vel', 10)
+        self.publisher = self.create_publisher(Twist, 'cmd_vel', 10)
         self.timer = self.create_timer(0.1, self.timer_callback)  # Poll at 10 Hz
         self.get_logger().info("Keyboard Teleop Node Running: Use WASD keys to control the robot")
         # Save terminal settings
@@ -32,8 +32,6 @@ class KeyboardTeleop(Node):
 
     def timer_callback(self):
         key = self.get_key()
-#        message = "Got a:"+str(key)
-#        self.get_logger().info(message)
         if key == 'w':
             self.get_logger().info("w - forward")
             self.publish_twist(1.0, 0.0)  # Forward
@@ -64,11 +62,11 @@ class KeyboardTeleop(Node):
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.settings)
         return key
 
-    def publish_twist(self, linear, angular):
-        msg = Twist()
-        msg.linear.x = linear
-        msg.angular.z = angular
-        self.publisher_.publish(msg)
+def publish_twist(self, linear, angular):
+    msg = Twist()
+    msg.linear.x = linear
+    msg.angular.z = angular
+    self.publisher.publish(msg)
 
 def main(args=None):
     rclpy.init(args=args)
