@@ -14,4 +14,30 @@ These are the connections you need to make for the [PAA5100JE Near Optical Flow 
 * INT	GP21(27)
 * GND	GND(16)
 
+Enable X-Windows for Docker
+```
+xhost +local:
+```
+Connect to the Docker image
+```
+cd ROS-Intro
+docker container prune
+source scripts/run_image.bash
+```
+Update everything:
+```
+colcon build --symlink-install
+```
+Setup environment:
+```
+source install/setup.bash
+```
+Start the robot service
+```
+ros2 launch rob_ws display_urdf_launch.py
+```
+Publish the joint movement information:
+```
+ros2 run joint_state_publisher_gui joint_state_publisher_gui
+```
 

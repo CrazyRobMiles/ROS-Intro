@@ -1,39 +1,95 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="robot">
+<robot name="mecanum_robot">
 
   <!-- Base Link -->
   <link name="base_link">
     <visual>
       <geometry>
-        <box size="0.5 0.5 0.1"/> <!-- Change the size as needed -->
+        <box size="0.04 0.04 0.01"/> <!-- 40mm square base, 10mm height -->
       </geometry>
-      <material name="blue">
-        <color rgba="0 0 1 1"/>
-      </material>
     </visual>
+    <inertial>
+      <mass value="1.0"/> <!-- Adjust based on actual mass -->
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/> <!-- Simplified, adjust for your robot -->
+    </inertial>
   </link>
 
-  <!-- Mecanum Wheel Links -->
-  <link name="front_left_wheel_link">
-    <visual>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/> <!-- Adjust the dimensions as needed -->
-      </geometry>
-      <material name="black"/>
-    </visual>
-  </link>
+<!-- Joints -->
+<!-- Adjusted for wheel orientation with axes parallel to the ground and placed outside the base -->
+<joint name="joint_front_left_wheel" type="continuous">
+  <parent link="base_link"/>
+  <child link="wheel_front_left"/>
+  <origin xyz="0.02 0.025 0.0" rpy="1.5708 0 0"/> 
+  <axis xyz="0 0 1"/>
+</joint>
 
-  <!-- Repeat for front_right_wheel_link, rear_left_wheel_link, and rear_right_wheel_link with similar structure -->
+<joint name="joint_front_right_wheel" type="continuous">
+  <parent link="base_link"/>
+  <child link="wheel_front_right"/>
+  <origin xyz="0.02 -0.025 0.0" rpy="0 0 1.5708"/>
+</joint>
+<joint name="joint_rear_left_wheel" type="continuous">
+  <parent link="base_link"/>
+  <child link="wheel_rear_left"/>
+  <origin xyz="-0.02 0.025 0.0" rpy="-1.5708 0 0"/>
+  <axis xyz="0 0 -1"/>
+</joint>
 
-  <!-- Joints -->
-  <!-- Front Left Wheel Joint -->
-  <joint name="front_left_wheel_joint" type="continuous">
-    <parent link="base_link"/>
-    <child link="front_left_wheel_link"/>
-    <origin xyz="0.25 0.25 0" rpy="0 0 0"/> <!-- Adjust position as needed -->
-    <axis xyz="0 0 1"/>
-  </joint>
+<joint name="joint_rear_right_wheel" type="continuous">
+  <parent link="base_link"/>
+  <child link="wheel_rear_right"/>
+  <origin xyz="-0.02 -0.025 0.0" rpy="1.5708 0 0"/>
+  <axis xyz="0 0 -1"/>
+</joint>
 
-  <!-- Repeat for other three wheels with appropriate names and positions -->
+  <!-- Wheels -->
+<!-- Wheel Links Definitions -->
+<link name="wheel_front_left">
+  <visual>
+    <geometry>
+      <cylinder radius="0.01" length="0.01"/> <!-- Example dimensions; adjust as needed -->
+    </geometry>
+  </visual>
+  <inertial>
+    <mass value="0.1"/>
+    <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+  </inertial>
+</link>
+
+<link name="wheel_front_right">
+  <visual>
+    <geometry>
+      <cylinder radius="0.01" length="0.01"/>
+    </geometry>
+  </visual>
+  <inertial>
+    <mass value="0.1"/>
+    <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+  </inertial>
+</link>
+
+<link name="wheel_rear_left">
+  <visual>
+    <geometry>
+      <cylinder radius="0.01" length="0.01"/>
+    </geometry>
+  </visual>
+  <inertial>
+    <mass value="0.1"/>
+    <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+  </inertial>
+</link>
+
+<link name="wheel_rear_right">
+  <visual>
+    <geometry>
+      <cylinder radius="0.01" length="0.01"/>
+    </geometry>
+  </visual>
+  <inertial>
+    <mass value="0.1"/>
+    <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+  </inertial>
+</link>
 
 </robot>
