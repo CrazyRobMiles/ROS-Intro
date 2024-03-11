@@ -1,4 +1,4 @@
-# FAQ
+2# FAQ
 #### Why do I get an error when I try to run my Docker image?
 This might be because there is already an image with that name on your machine. The **run** command creates a new container and starts it running. If the container already exists the run command will fail. Docker can create a brand new name for successive containers but the run command in this exercise always creates a container called **ros_demo**. Once a container has been created you can use the Docker start command to resetart it:
 ```
